@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gill’s Study & Chat Hub</title>
+<!-- Modern font -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  body {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #4B0082; /* Indigo purple */
+    color: #fff;
+  }
+  header {
+    background-color: #FFD700; /* Gold */
+    padding: 10px;
+    text-align: center;
+  }
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: #4B0082;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    background-color: #800080; /* Purple */
+    padding: 10px;
+  }
+  nav button {
+    background-color: #FFD700; /* Gold */
+    border: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  nav button:hover {
+    background-color: #FFC107;
+  }
+  .container {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 80px);
+  }
+  /* Sidebar: Folders & Topics */
+  .folders {
+    width: 250px;
+    background-color: #6A0DAD; /* Dark purple */
+    padding: 10px;
+    overflow-y: auto;
+  }
+  .folder {
+    border: 2px solid #FFD700;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 5px;
+    cursor: pointer;
+  }
+  .folder:hover {
+    background-color: #8A2BE2; /* Light purple hover */
+  }
+  .topics {
+    display: none;
+    margin-left: 10px;
+    margin-top: 5px;
+  }
+  .topic {
+    background-color: #9370DB;
+    margin: 3px 0;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .topic:hover {
+    background-color: #BA55D3;
+  }
+
+  /* Main content: resources, chat, mini-games */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #7B68EE; /* Medium purple */
+    padding: 10px;
+  }
+  #resources {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #8A2BE2;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  /* Chat box */
+  #chat-box {
+    background-color: #D8BFD8; /* Thistle light purple */
+    padding: 10px;
+    border-radius: 8px;
+    height: 150px;
+    overflow-y: auto;
+    margin-top: 10px;
+  }
+  #messages {
+    height: 80px;
+    overflow-y: auto;
+  }
+  .chat-message {
+    margin: 3px 0;
+  }
+  #confession-input {
+    width: calc(100% - 80px);
+    padding: 5px;
+  }
+  #send-btn {
+    padding: 5px 10px;
+    margin-left: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #FFD700;
+    cursor: pointer;
+  }
+  /* Mini-games container */
+  #miniGamesContainer {
+    margin-top: 10px;
+  }
+  /* Show/hide sections */
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>💜 Gill’s Study & Chat Hub</h1>
+</header>
+
+<nav>
+  <button onclick="showSection('folders')">Folders</button>
+  <button onclick="showSection('chat')">Chat & Confess</button>
+  <button onclick="showSection('resources')">Resources</button>
+  <button onclick="showSection('miniGames')">Mini Games</button>
+</nav>
+
+<div class="container" id="main-area">
+
+  <!-- Folders & Topics Sidebar -->
+  <div class="folders" id="folders-section">
+    <!-- Resources for Grades 7-10 -->
+    <!-- Example: Grade 7 -->
+    <div class="folder" onclick="toggleFolder('grade7')">Grade 7</div>
+    <div class="topics" id="grade7">
+      <!-- English Grade 7 -->
+      <div class="folder" onclick="toggleFolder('english7')">English</div>
+      <div class="topics" id="english7">
+        <div class="folder" onclick="toggleFolder('g7Q1')">Quarter 1</div>
+        <div class="topics" id="g7Q1">
+          <div class="topic" onclick="showResource('Grade 7', 'English Q1', 'Paragraph Writing')">Paragraph Writing</div>
+          <div class="topic" onclick="showResource('Grade 7', 'English Q1', 'Reading Comprehension')">Reading Comprehension</div>
+        </div>
+        <!-- Add more quarters as needed -->
+      </div>
+      <!-- Science Grade 7 -->
+      <div class="folder" onclick="toggleFolder('science7')">Science</div>
+      <div class="topics" id="science7">
+        <div class="folder" onclick="toggleFolder('s7Q1')">Quarter 1</div>
+        <div class="topics" id="s7Q1">
+          <div class="topic" onclick="showResource('Grade 7', 'Science Q1', 'Cells & Life')">Cells & Life</div>
+          <div class="topic" onclick="showResource('Grade 7', 'Science Q1', 'Ecosystems')">Ecosystems</div>
+        </div>
+        <!-- More quarters if needed -->
+      </div>
+    </div>
+
+    <!-- Grade 8 -->
+    <div class="folder" onclick="toggleFolder('grade8')">Grade 8</div>
+    <div class="topics" id="grade8">
+      <!-- English Grade 8 -->
+      <div class="folder" onclick="toggleFolder('english8')">English</div>
+      <div class="topics" id="english8">
+        <div class="folder" onclick="toggleFolder('g8Q1')">Quarter 1</div>
+        <div class="topics" id="g8Q1">
+          <div class="topic" onclick="showResource('Grade 8', 'English Q1', 'Literature & Grammar')">Literature & Grammar</div>
+        </div>
+      </div>
+      <!-- Science Grade 8 -->
+      <div class="folder" onclick="toggleFolder('science8')">Science</div>
+      <div class="topics" id="science8">
+        <div class="folder" onclick="toggleFolder('s8Q1')">Quarter 1</div>
+        <div class="topics" id="s8Q1">
+          <div class="topic" onclick="showResource('Grade 8', 'Science Q1', 'Earth & Atmosphere')">Earth & Atmosphere</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grade 9 -->
+    <div class="folder" onclick="toggleFolder('grade9')">Grade 9</div>
+    <div class="topics" id="grade9">
+      <!-- English Grade 9 -->
+      <div class="folder" onclick="toggleFolder('english9')">English</div>
+      <div class="topics" id="english9">
+        <div class="folder" onclick="toggleFolder('g9Q1')">Quarter 1</div>
+        <div class="topics" id="g9Q1">
+          <div class="topic" onclick="showResource('Grade 9', 'English Q1', 'Literary Analysis')">Literary Analysis</div>
+        </div>
+      </div>
+      <!-- Science Grade 9 -->
+      <div class="folder" onclick="toggleFolder('science9')">Science</div>
+      <div class="topics" id="science9">
+        <div class="folder" onclick="toggleFolder('s9Q1')">Quarter 1</div>
+        <div class="topics" id="s9Q1">
+          <div class="topic" onclick="showResource('Grade 9', 'Science Q1', 'Physics: Forces & Motion')">Physics: Forces & Motion</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grade 10 -->
+    <div class="folder" onclick="toggleFolder('grade10')">Grade 10</div>
+    <div class="topics" id="grade10">
+      <!-- English Grade 10 -->
+      <div class="folder" onclick="toggleFolder('english10')">English</div>
+      <div class="topics" id="english10">
+        <div class="folder" onclick="toggleFolder('g10Q1')">Quarter 1</div>
+        <div class="topics" id="g10Q1">
+          <div class="topic" onclick="showResource('Grade 10', 'English Q1', 'Literature & Critical Essays')">Literature & Critical Essays</div>
+        </div>
+      </div>
+      <!-- Science Grade 10 -->
+      <div class="folder" onclick="toggleFolder('science10')">Science</div>
+      <div class="topics" id="science10">
+        <div class="folder" onclick="toggleFolder('s10Q1')">Quarter 1</div>
+        <div class="topics" id="s10Q1">
+          <div class="topic" onclick="showResource('Grade 10', 'Science Q1', 'Energy & Thermodynamics')">Energy & Thermodynamics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content: resources, chat, mini-games -->
+  <div class="main" id="mainContent">
+
+    <!-- Resources area -->
+    <div id="resources">
+      <h3>Select a topic to view resources</h3>
+    </div>
+
+    <!-- Mini-games -->
+    <div id="miniGames" class="hidden">
+      <h3>Mini Games</h3>
+      <div>
+        <button onclick="startMathQuiz()">Start Math Quiz</button>
+        <button onclick="startMemoryGame()">Start Memory Game</button>
+      </div>
+      <div id="miniGameArea" style="margin-top:10px;"></div>
+    </div>
+
+    <!-- Chat & Confess -->
+    <div id="chat" class="hidden">
+      <h3>Chat & Confess</h3>
+      <div id="messages"></div>
+      <input type="text" id="confession-input" placeholder="Say something..."/>
+      <button id="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Show/hide sections
+  function showSection(section) {
+    document.querySelectorAll('#mainContent > div').forEach(div => div.classList.add('hidden'));
+    if (section === 'folders') {
+      document.querySelector('#folders-section').style.display = 'block';
+    } else if (section === 'resources') {
+      document.querySelector('#resources').classList.remove('hidden');
+    } else if (section === 'chat') {
+      document.querySelector('#chat').classList.remove('hidden');
+    } else if (section === 'miniGames') {
+      document.querySelector('#miniGames').classList.remove('hidden');
+    }
+  }
+
+  // Toggle folder display
+  function toggleFolder(id) {
+    const el = document.getElementById(id);
+    if (el.style.display === 'block') {
+      el.style.display = 'none';
+    } else {
+      el.style.display = 'block';
+    }
+  }
+
+  // Show resource details when a topic is clicked
+  function showResource(subject, quarter, topic) {
+    const resDiv = document.getElementById('resources');
+    resDiv.innerHTML = `
+      <h3>${subject} - ${quarter}</h3>
+      <p><strong>Topic:</strong> ${topic}</p>
+      <p><strong>Notes:</strong> Here are some notes for ${topic}.</p>
+      <p><strong>Links:</strong></p>
+      <ul>
+        <li><a href="#" onclick="showVideo('https://www.youtube.com/embed/VIDEOID1')">Video Lecture 1</a></li>
+        <li><a href="#" onclick="showVideo('https://www.youtube.com/embed/VIDEOID2')">Video Lecture 2</a></li>
+        <li><a href="#" onclick="showNote()">Read detailed notes</a></li>
+      </ul>
+    `;
+  }
+  
+  // Show YouTube video
+  function showVideo(url) {
+    document.getElementById('resources').innerHTML += `
+      <iframe width="560" height="315" src="${url}" frameborder="0" allowfullscreen></iframe>
+    `;
+  }
+  // Placeholder for detailed notes
+  function showNote() {
+    alert("Detailed notes about this topic...");
+  }
+
+  // Chat & Confess
+  function sendMessage() {
+    const input = document.getElementById('confession-input');
+    if (input.value.trim() !== "") {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'chat-message';
+      msgDiv.innerText = input.value;
+      document.getElementById('messages').appendChild(msgDiv);
+      input.value = "";
+      // Auto scroll
+      document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+    }
+  }
+
+  // Mini-games: Math Quiz
+  let quizQuestions = [
+    { question: "What is 7 x 8?", answer: 56 },
+    { question: "What is 12 + 15?", answer: 27 },
+    { question: "What is 50 ÷ 5?", answer: 10 },
+    { question: "What is 9^2?", answer: 81 }
+  ];
+  let currentQuizIndex = 0;
+
+  function startMathQuiz() {
+    document.getElementById('miniGameArea').innerHTML = `
+      <h4>Math Quiz</h4>
+      <p id="quiz-question"></p>
+      <input type="number" id="quiz-answer"/>
+      <button onclick="checkQuizAnswer()">Submit</button>
+      <div id="quiz-feedback"></div>
+    `;
+    loadQuizQuestion();
+  }
+
+  function loadQuizQuestion() {
+    const q = quizQuestions[currentQuizIndex];
+    document.getElementById('quiz-question').innerText = q.question;
+    document.getElementById('quiz-answer').value = '';
+    document.getElementById('quiz-feedback').innerText = '';
+  }
+
+  function checkQuizAnswer() {
+    const userAns = parseInt(document.getElementById('quiz-answer').value);
+    const correctAns = quizQuestions[currentQuizIndex].answer;
+    if (userAns === correctAns) {
+      document.getElementById('quiz-feedback').innerText = "Correct! 🎉";
+      currentQuizIndex = (currentQuizIndex + 1) % quizQuestions.length;
+      setTimeout(loadQuizQuestion, 1000);
+    } else {
+      document.getElementById('quiz-feedback').innerText = "Try again!";
+    }
+  }
+
+  // Mini-game: Memory Game
+  function startMemoryGame() {
+    const items = ['🍎', '🍌', '🍇', '🍓', '🍎', '🍌', '🍇', '🍓'];
+    shuffleArray(items);
+    let selected = [];
+    let matchedPairs = 0;
+
+    let gameHTML = '<div style="display:grid;grid-template-columns:repeat(4,80px);gap:10px;">';
+    items.forEach((item, index) => {
+      gameHTML += `<div class="card" onclick="flipCard(this, '${item}')") data-item="${item}" style="width:80px;height:80px;background:#fff;border:1px solid #000;text-align:center;font-size:2rem; line-height:80px;"> </div>`;
+    });
+    gameHTML += '</div>';
+
+    document.getElementById('miniGameArea').innerHTML = gameHTML;
+  }
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  let firstCard = null;
+  function flipCard(cardDiv, item) {
+    if (cardDiv.innerText !== "") return; // Already flipped
+    cardDiv.innerText = item;
+    if (!firstCard) {
+      firstCard = cardDiv;
+    } else {
+      if (firstCard.dataset.item === cardDiv.dataset.item) {
+        // Match
+        firstCard = null;
+      } else {
+        // Not match: flip back after delay
+        setTimeout(() => {
+          firstCard.innerText = '';
+          cardDiv.innerText = '';
+          firstCard = null;
+        }, 1000);
+      }
+    }
+  }
+
+  // Initialize default view
+  showSection('folders');
+</script>
+</body>
+</html>
